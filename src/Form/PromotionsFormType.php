@@ -20,7 +20,6 @@ class PromotionsFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('id')
             ->add('dateDeb', DateType::class, [
                 'label' => 'Date de début',
                 'format' => 'yyyy-MM-dd',

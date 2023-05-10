@@ -16,7 +16,7 @@ class Promotions
     use SlugTrait;
 
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy:"AUTO")]
     #[ORM\Column(type: 'integer')]
     private $id;
 
@@ -26,6 +26,8 @@ class Promotions
 
     private $dateDeb;
     private $dateFin;
+
+    #[ORM\Column(type: 'integer')]
     private $pourcentage;
 
     public function __construct()
@@ -43,14 +45,14 @@ class Promotions
         return $this->dateDeb;
     }
 
-    public function setDateDeb(string $dateDeb): self
+    public function setDateDeb($dateDeb): self
     {
         $this->dateDeb = $dateDeb;
 
         return $this;
     }
 
-    public function setDateFin(string $dateFin): self
+    public function setDateFin($dateFin): self
     {
         $this->dateFin = $dateFin;
         

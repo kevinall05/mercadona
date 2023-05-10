@@ -40,8 +40,8 @@ class PromotionsController extends AbstractController
         //On vérifie si le formulaire est soumis ET valide
         if ($promotionForm->isSubmitted() && $promotionForm->isValid()) {
             // On génère le slug
-            // $slug = $slugger->slug($promotion->getId());
-            // $promotion->setSlug($slug);
+            $slug = $slugger->slug($promotion->getId());
+            $promotion->setSlug($slug);
 
             // On stocke
             $em->persist($promotion);

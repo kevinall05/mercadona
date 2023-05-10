@@ -53,7 +53,8 @@ class CategoriesController extends AbstractController
             return $this->redirectToRoute('admin_categories_index');
         }
 
-        return $this->renderForm('admin/categories/add.html.twig', compact('categoriesForm'));
-        // ['categoriesForm' => $categoriesForm]
+        return $this->render('admin/categories/add.html.twig',[
+            'categoriesForm' => $categoryForm->createView()
+        ]);
     }
 }
