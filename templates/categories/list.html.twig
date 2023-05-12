@@ -9,17 +9,30 @@
                 <h1>Liste des produits de la catégorie {{ category.name }}</h1>
             </div>
             {% for product in products.data %}
-                <div class="col-3 mb-3">
-                    <article class="card h-100">
-                        {# <img src="{{ asset('assets/uploads/products/mini/300x300-' ~ product.images[0].name ) }}" class="card-img-top" alt="{{ product.name }}"> #}
-                        <div class="card-body">
-                            <h2 class="card-title">{{ product.name }}</h2>
-                            <p class="card-text">{{ product.description }}</p>
-                            <a href="{{ path('products_details', {"slug": product.slug }) }}" class="btn btn-primary">Voir les détails</a>
-                        </div>
-                    </article>
-                </div>
-            {% endfor %}
+				<div class="col-4 oneProduct">
+					<div class="card h-100">
+						<div class="card-body">
+							<h3 class="card-title">{{ product.name }}</h3>
+							<p class="card-text">{{ product.description }}</p>
+							{% set promotion = null %}
+							{% for promo in promotions %}
+								{% if promo.products.id == product.id and promo.dateDeb|date("m/d/Y") <= 'now'|date("m/d/Y") and promo.dateFin|date("m/d/Y") >= 'now'|date("m/d/Y") %}
+									{% set promotion = promo %}
+								{% endif %}
+							{% endfor %}
+							{% if promotion is not null %}
+								<p class="card-text"><strike>Prix :
+									{{ product.price|number_format(2) }} €</strike><br>
+                                    {% set discountedPrice = product.price - (product.price * promotion.pourcentage / 100) %}
+									<p style="color:red;"><b>Prix promotionnel: {{ discountedPrice|number_format(2) }} €</b></p>
+							{% else %}
+								<p class="card-text">Prix :
+									{{ product.price|number_format(2) }} €</p>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			{% endfor %}
             {% set path = 'categories_list' %}
             {% set slug = category.slug %}
             {% set pages = products.pages %}

@@ -4,9 +4,12 @@
 	<main class="container">
 		<section class="row">
 			<div class="col-12">
-				<h1>Site e-commerce</h1>
-				<p>Bienvenue dans notre boutique</p>
+				<h1>Mercadona</h1>
+				<p>Bienvenue sur le site vitrine de notre boutique.<br>
+                Vous pouvez choisir de trier les produits par catégories mais aussi de voir le catalogue entier.</p>
 			</div>
+            <h2>Trier par catégories</h2>
+            <p>Sélectionner la catégorie de produits qui vous intéressent</p>
 			{% for category in categories %}
 				{% if category.parent == null %}
 					<div class="col-12">
@@ -25,10 +28,11 @@
 			{% endfor %}
 		</section>
 
-		<section class="row">
-			<h1>Tous les produits</h1>
+		<section class="row allProducts">
+			<h2>Tous les produits</h2>
+            <p>Retrouvez la totalité de nos produits</p>
 			{% for product in products %}
-				<div class="col-4">
+				<div class="col-4 oneProduct">
 					<div class="card h-100">
 						<div class="card-body">
 							<h3 class="card-title">{{ product.name }}</h3>
@@ -40,12 +44,12 @@
 								{% endif %}
 							{% endfor %}
 							{% if promotion is not null %}
-								<p class="card-text"><strike>Prix normal:
+								<p class="card-text"><strike>Prix :
 									{{ product.price|number_format(2) }} €</strike><br>
                                     {% set discountedPrice = product.price - (product.price * promotion.pourcentage / 100) %}
 									<p style="color:red;"><b>Prix promotionnel: {{ discountedPrice|number_format(2) }} €</b></p>
 							{% else %}
-								<p class="card-text">Prix normal:
+								<p class="card-text">Prix :
 									{{ product.price|number_format(2) }} €</p>
 							{% endif %}
 						</div>
