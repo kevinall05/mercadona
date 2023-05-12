@@ -26,7 +26,7 @@ class ProductsFormType extends AbstractType
             ->add('description')
             ->add('price', MoneyType::class, options:[
                 'label' => 'Prix',
-                'divisor' => 100,
+                // 'divisor' => 100,
                 'constraints' => [
                     new Positive(
                         message: 'Le prix ne peut être négatif'

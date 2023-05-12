@@ -39,8 +39,9 @@ class PromotionsController extends AbstractController
 
         //On vérifie si le formulaire est soumis ET valide
         if ($promotionForm->isSubmitted() && $promotionForm->isValid()) {
+            // var_dump($promotion);die;
             // On génère le slug
-            $slug = $slugger->slug($promotion->getId());
+            $slug = $slugger->slug($promotion->getPourcentage());
             $promotion->setSlug($slug);
 
             // On stocke
