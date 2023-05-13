@@ -57,4 +57,24 @@ class CategoriesController extends AbstractController
             'categoriesForm' => $categoryForm->createView()
         ]);
     }
+
+    #[Route('/suppression/{id}', name: 'delete')]
+    public function delete(Categories $categorie, EntityManagerInterface $em): Response
+    {
+        // On vérifie si l'utilisateur peut supprimer avec le Voter
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', $categorie);
+
+        if (!$categorie) {
+            // Si le produit n'existe pas, on retourne une erreur 404
+            throw $this->createNotFoundException('La catégorie n\'existe pas');
+        }
+
+        // On supprime le produit
+        $em->remove($categorie);
+        $em->flush();
+
+        $this->addFlash('success', 'Catégorie supprimée avec succès');
+
+        return $this->redirectToRoute('admin_categories_index');
+    }
 }
