@@ -6,10 +6,10 @@
 			<div class="col-12">
 				<h1>Mercadona</h1>
 				<p>Bienvenue sur le site vitrine de notre boutique.<br>
-                Vous pouvez choisir de trier les produits par catégories mais aussi de voir le catalogue entier.</p>
+					Vous pouvez choisir de trier les produits par catégories mais aussi de voir le catalogue entier.</p>
 			</div>
-            <h2>Trier par catégories</h2>
-            <p>Sélectionner la catégorie de produits qui vous intéressent</p>
+			<h2>Trier par catégories</h2>
+			<p>Sélectionner la catégorie de produits qui vous intéressent</p>
 			{% for category in categories %}
 				{% if category.parent == null %}
 					<div class="col-12">
@@ -30,12 +30,19 @@
 
 		<section class="row allProducts">
 			<h2>Tous les produits</h2>
-            <p>Retrouvez la totalité de nos produits</p>
+			<p>Retrouvez la totalité de nos produits</p>
 			{% for product in products %}
 				<div class="col-4 oneProduct">
 					<div class="card h-100">
 						<div class="card-body">
 							<h3 class="card-title">{{ product.name }}</h3>
+							<td>
+								{% if product.images is not empty %}
+									{% for image in product.images %}
+										<img src="{{ asset('assets/uploads/products/mini/300x300-' ~ image.name) }}" alt="{{ product.name }}" class="img-thumbnail" width='50px'>
+									{% endfor %}
+								{% endif %}
+							</td>
 							<p class="card-text">{{ product.description }}</p>
 							{% set promotion = null %}
 							{% for promo in promotions %}
@@ -44,13 +51,20 @@
 								{% endif %}
 							{% endfor %}
 							{% if promotion is not null %}
-								<p class="card-text"><strike>Prix :
-									{{ product.price|number_format(2) }} €</strike><br>
-                                    {% set discountedPrice = product.price - (product.price * promotion.pourcentage / 100) %}
-									<p style="color:red;"><b>Prix promotionnel: {{ discountedPrice|number_format(2) }} €</b></p>
+								<p class="card-text">
+									<strike>Prix :
+										{{ product.price|number_format(2) }}
+										€</strike><br>{% set discountedPrice = product.price - (product.price * promotion.pourcentage / 100) %}
+								</p>
+								<p style="color:red;">
+									<b>Prix promotionnel:
+										{{ discountedPrice|number_format(2) }}
+										€</b>
+								</p>
 							{% else %}
 								<p class="card-text">Prix :
-									{{ product.price|number_format(2) }} €</p>
+									{{ product.price|number_format(2) }}
+									€</p>
 							{% endif %}
 						</div>
 					</div>

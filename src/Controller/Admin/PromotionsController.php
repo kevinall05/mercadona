@@ -58,4 +58,24 @@ class PromotionsController extends AbstractController
             'promotionsForm' => $promotionForm->createView()
         ]);
     }
+
+    #[Route('/suppression/{id}', name: 'delete')]
+    public function delete(Promotions $promotion, EntityManagerInterface $em): Response
+    {
+        // On vérifie si l'utilisateur peut supprimer avec le Voter
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', $promotion);
+
+        if (!$promotion) {
+            // Si le produit n'existe pas, on retourne une erreur 404
+            throw $this->createNotFoundException('La promotion n\'existe pas');
+        }
+
+        // On supprime le produit
+        $em->remove($promotion);
+        $em->flush();
+
+        $this->addFlash('success', 'Promotion supprimée avec succès');
+
+        return $this->redirectToRoute('admin_promotions_index');
+    }
 }
