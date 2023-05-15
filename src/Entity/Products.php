@@ -49,13 +49,9 @@ class Products
     #[ORM\OneToMany(mappedBy: 'products', targetEntity: Images::class, orphanRemoval: true, cascade: ['persist'])]
     private $images;
 
-    #[ORM\OneToMany(mappedBy: 'products', targetEntity: OrdersDetails::class)]
-    private $ordersDetails;
-
     public function __construct()
     {
         $this->images = new ArrayCollection();
-        $this->ordersDetails = new ArrayCollection();
         $this->created_at = new \DateTimeImmutable();
     }
 
@@ -148,36 +144,6 @@ class Products
             // set the owning side to null (unless already changed)
             if ($image->getProducts() === $this) {
                 $image->setProducts(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|OrdersDetails[]
-     */
-    public function getOrdersDetails(): Collection
-    {
-        return $this->ordersDetails;
-    }
-
-    public function addOrdersDetail(OrdersDetails $ordersDetail): self
-    {
-        if (!$this->ordersDetails->contains($ordersDetail)) {
-            $this->ordersDetails[] = $ordersDetail;
-            $ordersDetail->setProducts($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrdersDetail(OrdersDetails $ordersDetail): self
-    {
-        if ($this->ordersDetails->removeElement($ordersDetail)) {
-            // set the owning side to null (unless already changed)
-            if ($ordersDetail->getProducts() === $this) {
-                $ordersDetail->setProducts(null);
             }
         }
 
