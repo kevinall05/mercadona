@@ -42,6 +42,7 @@ class CategoriesController extends AbstractController
             // On génère le slug
             $slug = $slugger->slug($category->getName());
             $category->setSlug($slug);
+            $category->setParent($category->getId());
 
             // On stocke
             $em->persist($category);

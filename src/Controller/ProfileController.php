@@ -8,12 +8,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/profil', name: 'profile_')]
 class ProfileController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    public function index(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordFormType::class);
@@ -24,7 +25,7 @@ class ProfileController extends AbstractController
             $encodedPassword = $passwordHasher->hashPassword($user, $data['newPassword']);
 
             $user->setPassword($encodedPassword);
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             $this->addFlash('success', 'Votre mot de passe a été mis à jour.');
 
