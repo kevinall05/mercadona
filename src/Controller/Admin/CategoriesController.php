@@ -42,7 +42,18 @@ class CategoriesController extends AbstractController
             // On génère le slug
             $slug = $slugger->slug($category->getName());
             $category->setSlug($slug);
-            $category->setParent($category->getId());
+
+            // récup id max
+            $maxIdQuery = $em->createQueryBuilder()
+            ->select('MAX(c.id)')
+            ->from(Categories::class, 'c')
+            ->getQuery();
+            $maxId = $maxIdQuery->getSingleScalarResult();
+            $newId = $maxId + 1;
+
+            // var_dump($newId);die;
+            $category->setId($newId);
+            $category->setParent($newId);
 
             // On stocke
             $em->persist($category);

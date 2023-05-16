@@ -14,7 +14,6 @@ class Categories
     use SlugTrait;
     
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy:"AUTO")]
     #[ORM\Column(type: 'integer')]
     private $id;
 
@@ -44,6 +43,14 @@ class Categories
     {
         return $this->id;
     }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
 
     public function getName(): ?string
     {
