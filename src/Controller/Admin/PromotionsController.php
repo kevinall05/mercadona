@@ -28,10 +28,7 @@ class PromotionsController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        //On crée un "nouveau produit"
         $promotion = new Promotions();
-
-        // On crée le formulaire
         $promotionForm = $this->createForm(PromotionsFormType::class, $promotion);
 
         // On traite la requête du formulaire
@@ -39,7 +36,6 @@ class PromotionsController extends AbstractController
 
         //On vérifie si le formulaire est soumis ET valide
         if ($promotionForm->isSubmitted() && $promotionForm->isValid()) {
-            // var_dump($promotion);die;
             // On génère le slug
             $slug = $slugger->slug($promotion->getPourcentage());
             $promotion->setSlug($slug);
@@ -77,5 +73,38 @@ class PromotionsController extends AbstractController
         $this->addFlash('success', 'Promotion supprimée avec succès');
 
         return $this->redirectToRoute('admin_promotions_index');
+    }
+
+    #[Route('/edition/{id}', name: 'edit')]
+    public function edit(Promotions $promotion,Request $request, EntityManagerInterface $em, SluggerInterface $slugger)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // On crée le formulaire
+        $promotionForm = $this->createForm(PromotionsFormType::class, $promotion);
+
+        // On traite la requête du formulaire
+        $promotionForm->handleRequest($request);
+
+        //On vérifie si le formulaire est soumis ET valide
+        if ($promotionForm->isSubmitted() && $promotionForm->isValid()) {
+            // var_dump($promotion);die;
+            // On génère le slug
+            $slug = $slugger->slug($promotion->getPourcentage());
+            $promotion->setSlug($slug);
+
+            // On stocke
+            $em->persist($promotion);
+            $em->flush();
+
+            $this->addFlash('success', 'Promotion modifiée avec succès');
+
+            // On redirige
+            return $this->redirectToRoute('admin_promotions_index');
+        }
+
+        return $this->render('admin/promotions/edit.html.twig',[
+            'promotionsForm' => $promotionForm->createView()
+        ]);
     }
 }

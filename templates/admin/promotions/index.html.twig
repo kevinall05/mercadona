@@ -28,9 +28,9 @@
 								<td>{{ promotion.pourcentage }}</td>
 								<td>{{ promotion.dateDeb | date('d-m-Y')}}</td>
 								<td>{{ promotion.dateFin | date('d-m-Y')}}</td>
-								{# <td>
+								<td>
 									<a href="{{ path('admin_promotions_edit', {id: promotion.id})}}" class="btn btn-success">Modifier</a>
-								</td> #}
+								</td>
 								<td>
 									<a href="{{ path('admin_promotions_delete', {id: promotion.id})}}" class="btn btn-error">Supprimer</a>
 								</td>
