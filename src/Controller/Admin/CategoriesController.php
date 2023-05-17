@@ -77,4 +77,38 @@ class CategoriesController extends AbstractController
 
         return $this->redirectToRoute('admin_categories_index');
     }
+
+    #[Route('/edition/{id}', name: 'edit')]
+    public function edit(Categories $category,Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // On crée le formulaire
+        $categoryForm = $this->createForm(CategoryFormType::class, $category);
+
+        // On traite la requête du formulaire
+        $categoryForm->handleRequest($request);
+
+        //On vérifie si le formulaire est soumis ET valide
+        if ($categoryForm->isSubmitted() && $categoryForm->isValid()) {
+            // On récupère les images
+
+            // On génère le slug
+            $slug = $slugger->slug($category->getName());
+            $category->setSlug($slug);
+
+            // On stocke
+            $em->persist($category);
+            $em->flush();
+
+            $this->addFlash('success', 'Catégorie modifiée avec succès');
+
+            // On redirige
+            return $this->redirectToRoute('admin_categories_index');
+        }
+
+        return $this->render('admin/categories/edit.html.twig',[
+            'categoriesForm' => $categoryForm->createView()
+        ]);
+    }
 }

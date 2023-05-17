@@ -17,7 +17,7 @@
 							<th>Parent</th>
 							<th>Slug</th>
 							<th>Ordre</th>
-							<th>Actions</th>
+							<th colspan="2">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -32,6 +32,9 @@
 								</td>
 								<td>{{ categorie.slug }}</td>
 								<td>{{ categorie.categoryOrder }}</td>
+								<td>
+									<a href="{{ path('admin_categories_edit', {id: categorie.id})}}" class="btn btn-success">Modifier</a>
+								</td>
 								<td>
 									<a href="{{ path('admin_categories_delete', {id: categorie.id})}}" class="btn btn-error">Supprimer</a>
 								</td>
