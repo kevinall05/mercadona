@@ -14,6 +14,7 @@ class Categories
     use SlugTrait;
     
     #[ORM\Id]
+    #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
