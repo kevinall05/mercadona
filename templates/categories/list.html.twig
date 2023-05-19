@@ -38,7 +38,8 @@
 									<p style="color:red;">
 										<b>Prix promotionnel:
 											{{ discountedPrice|number_format(2) }}
-											€</b>
+											€ / -{{promotion.pourcentage}} % <br>
+										Remise valable du {{promotion.dateDeb|date("d/m/Y")}} au {{promotion.dateFin|date("d/m/Y")}}</b>
 									</p>
 								{% else %}
 									<p class="card-text">Prix :
