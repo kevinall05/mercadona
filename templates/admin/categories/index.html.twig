@@ -29,8 +29,12 @@
 								<td>
 									<a href="{{ path('admin_categories_edit', {id: categorie.id})}}" class="btn btn-success">Modifier</a>
 								</td>
-								<td>
-									<a href="{{ path('admin_categories_delete', {id: categorie.id})}}" class="btn btn-error">Supprimer</a>
+								<td style="vertical-align: middle;">
+									{% if categorie.products is not empty %}
+										<span>Cette catégorie ne peut pas être supprimée car elle est associée à des produits.</span>
+									{% else %}
+										<a href="{{ path('admin_categories_delete', {id: categorie.id})}}" class="btn btn-error">Supprimer</a>
+									{% endif %}
 								</td>
 							</tr>
 						{% endfor %}

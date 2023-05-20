@@ -6,6 +6,7 @@ use App\Entity\Images;
 use App\Entity\Products;
 use App\Form\ProductsFormType;
 use App\Repository\ProductsRepository;
+use App\Repository\PromotionsRepository;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,10 +20,11 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ProductsController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(ProductsRepository $productsRepository): Response
+    public function index(ProductsRepository $productsRepository, PromotionsRepository $promotionsRepository): Response
     {
         $produits = $productsRepository->findAll();
-        return $this->render('admin/products/index.html.twig', compact('produits'));
+        $promotions = $promotionsRepository->findAll();
+        return $this->render('admin/products/index.html.twig', compact('produits','promotions'));
     }
 
     #[Route('/ajout', name: 'add')]

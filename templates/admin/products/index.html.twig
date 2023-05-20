@@ -39,11 +39,24 @@
 								<td>
 									<a href="{{ path('admin_products_edit', {id: produit.id})}}" class="btn btn-success">Modifier</a>
 								</td>
-								<td>
-									<a href="{{ path('admin_products_delete', {id: produit.id})}}" class="btn btn-error">Supprimer</a>
-								</td>
-							</tr>
-						{% endfor %}
+								{% set promotion = null %}
+								{% for promo in promotions %}
+									{% if promo.products.id == produit.id and promo.dateDeb|date("m/d/Y") <= 'now'|date("m/d/Y") and promo.dateFin|date("m/d/Y") >= 'now'|date("m/d/Y") %}
+										{% set promotion = promo %}
+									{% endif %}
+								{% endfor %}
+								{% if promotion is null %}
+									<td>
+										<a href="{{ path('admin_products_delete', {id: produit.id})}}" class="btn btn-error">Supprimer</a>
+									</td>
+								{% else %}
+									<td style="vertical-align: middle;">
+										<span>Ce produit ne peut pas être supprimé car il a des promotions associées.</span>
+									</td>
+								{% endif %}
+								</tr>
+							{% endfor %}
+						</tbody>
 					</tbody>
 				</table>
 			</main>
