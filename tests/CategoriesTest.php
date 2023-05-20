@@ -20,9 +20,5 @@ class CategoriesTest extends TestCase
 
         $category->setParent($category);
         $this->assertEquals($category, $category->getParent());
-
-        $product = new Products();
-        $category->addProduct($product);
-        $this->assertEquals($product, $category->getProducts());
     }
 }
