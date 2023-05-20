@@ -26,7 +26,6 @@ class ProductsFormType extends AbstractType
             ->add('description')
             ->add('price', MoneyType::class, options:[
                 'label' => 'Prix',
-                // 'divisor' => 100,
                 'constraints' => [
                     new Positive(
                         message: 'Le prix ne peut être négatif'
@@ -43,7 +42,6 @@ class ProductsFormType extends AbstractType
                 'group_by' => 'parent.name',
                 'query_builder' => function(CategoriesRepository $cr){
                     return $cr->createQueryBuilder('c')
-                        // ->where('c.parent IS NOT NULL')
                         ->orderBy('c.name', 'ASC');
                 }
             ])

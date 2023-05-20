@@ -14,7 +14,6 @@
 						<tr>
 							<th>ID</th>
 							<th>Nom</th>
-							<th>Parent</th>
 							<th>Slug</th>
 							<th>Ordre</th>
 							<th colspan="2">Actions</th>
@@ -25,11 +24,6 @@
 							<tr>
 								<td>{{ categorie.id }}</td>
 								<td>{{ categorie.name }}</td>
-								<td>
-									{% if categorie.parent is not null %}
-										{{ categorie.parent.name }}
-									{% endif %}
-								</td>
 								<td>{{ categorie.slug }}</td>
 								<td>{{ categorie.categoryOrder }}</td>
 								<td>

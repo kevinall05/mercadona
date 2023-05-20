@@ -9,19 +9,16 @@
 					Vous pouvez choisir de trier les produits par catégories mais aussi de voir le catalogue entier.</p>
 			</div>
 			<h2>Trier par catégories</h2>
-			<p>Sélectionner la catégorie de produits qui vous intéressent</p>
-			{% for category in categories %}
-				{% if category.products is not empty %}
-					<div class="col-4">
-						<div class="card h-100">
-							<div class="card-body">
-								<h3 class="card-title">{{ category.name }}</h3>
-								<a href="{{ path('categories_list', {slug: category.slug}) }}" class="btn btn-primary">Voir les produits</a>
-							</div>
-						</div>
-					</div>
-				{% endif %}
-			{% endfor %}
+			<form>
+				<select onchange="location = this.value;">
+					<option value="#" selected disabled hidden>Sélectionner une catégorie</option>
+					{% for category in categories %}
+						{% if category.products is not empty %}
+							<option value="{{ path('categories_list', {slug: category.slug}) }}">{{ category.name }}</option>
+						{% endif %}
+					{% endfor %}
+				</select>
+			</form>
 		</section>
 
 		<section class="row allProducts">
@@ -55,8 +52,13 @@
 								<p style="color:red;">
 									<b>Prix promotionnel:
 										{{ discountedPrice|number_format(2) }}
-										€ / -{{promotion.pourcentage}} % <br>
-										Remise valable du {{promotion.dateDeb|date("d/m/Y")}} au {{promotion.dateFin|date("d/m/Y")}}</b>
+										€ / -{{promotion.pourcentage}}
+										%
+										<br>
+										Remise valable du
+										{{promotion.dateDeb|date("d/m/Y")}}
+										au
+										{{promotion.dateFin|date("d/m/Y")}}</b>
 								</p>
 							{% else %}
 								<p class="card-text">Prix :

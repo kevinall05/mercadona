@@ -16,7 +16,6 @@
                             <th>Nom</th>
                             <th>Email</th>
                             <th>Rôles</th>
-                            <th>Vérifié</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -42,12 +41,6 @@
                                         <span class="badge bg-{{ color }}">{{ name }}</span>
                                     {% endfor %}
                                     
-                                </td>
-                                <td>
-                                    <div class="form-check form-switch">
-                                        {# <input class="form-check-input" type="checkbox" role="switch" id="switch{{ user.id }}" {{ user.isVerified ? "checked" : "" }} disabled> #}
-                                        <label class="form-check-label" for="switch{{ user.id }}"></label>
-                                    </div>
                                 </td>
                                 <td>
                                     <a href="#" class="btn btn-success">Modifier</a>
