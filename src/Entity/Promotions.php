@@ -5,11 +5,8 @@ namespace App\Entity;
 use App\Entity\Trait\CreatedAtTrait;
 use App\Entity\Trait\SlugTrait;
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
-use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\PromotionsRepository;
 
 #[ORM\Entity(repositoryClass: PromotionsRepository::class)]
