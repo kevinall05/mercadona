@@ -29,6 +29,7 @@
 		<section class="row allProducts">
 			<h2>Tous les produits</h2>
 			<p>Retrouvez la totalité de nos produits</p>
+
 			{% for product in products %}
 				<div class="col-4 oneProduct">
 					<div class="card h-100">
@@ -50,9 +51,7 @@
 							{% endfor %}
 							{% if promotion is not null %}
 								<p class="card-text">
-									<strike>Prix :
-										{{ product.price|number_format(2) }}
-										€</strike><br>{% set discountedPrice = product.price - (product.price * promotion.pourcentage / 100) %}
+								{% set discountedPrice = product.price - (product.price * promotion.pourcentage / 100) %}
 								</p>
 								<p style="color:red;">
 									<b>Prix promotionnel:
