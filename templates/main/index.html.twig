@@ -50,8 +50,8 @@
 								{% endif %}
 							{% endfor %}
 							{% if promotion is not null %}
+								{% set discountedPrice = product.price - (product.price * promotion.pourcentage / 100) %}
 								<p style="color:red;">
-								<br>
 									<b>Prix promotionnel:
 										{{ discountedPrice|number_format(2) }}
 										€ / -{{promotion.pourcentage}}
@@ -63,7 +63,6 @@
 										{{promotion.dateFin|date("d/m/Y")}}</b>
 								</p>
 							{% else %}
-							<br>
 								<p class="card-text">Prix :
 									{{ product.price|number_format(2) }}
 									€</p>
