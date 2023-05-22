@@ -9,3 +9,23 @@
 .col-4 {
     margin-bottom: 10px;
 }
+
+th:last-child {
+    text-align: center;
+}
+
+main {
+    min-height: calc(100vh - 140px);
+}
+
+footer {
+    text-transform: uppercase;
+}
+
+nav a:hover {
+    color: rgb(2, 148, 65) !important;
+}
+
+body { 
+    text-align: center;
+}

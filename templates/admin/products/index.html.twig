@@ -37,6 +37,9 @@
 								<td>{{ produit.stock }}</td>
 								<td>{{ produit.categories.name }}</td>
 								<td>
+									<a href="{{ path('admin_promotions_add', {id: produit.id})}}" class="btn btn-primary">Promotions</a>
+								</td>
+								<td>
 									<a href="{{ path('admin_products_edit', {id: produit.id})}}" class="btn btn-success">Modifier</a>
 								</td>
 								{% set promotion = null %}
@@ -47,19 +50,18 @@
 								{% endfor %}
 								{% if promotion is null %}
 									<td>
-										<a href="{{ path('admin_products_delete', {id: produit.id})}}" class="btn btn-error">Supprimer</a>
+										<a href="{{ path('admin_products_delete', {id: produit.id})}}" class="btn btn-danger">Supprimer</a>
 									</td>
 								{% else %}
 									<td style="vertical-align: middle;">
 										<span>Ce produit ne peut pas être supprimé car il a des promotions associées.</span>
 									</td>
 								{% endif %}
-								</tr>
-							{% endfor %}
-						</tbody>
+							</tr>
+						{% endfor %}
 					</tbody>
-				</table>
-			</main>
-		</div>
+				</tbody>
+			</table>
+		</main>
 	</div>
-{% endblock %}
+</div>{% endblock %}
