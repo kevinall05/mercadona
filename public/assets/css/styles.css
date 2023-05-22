@@ -36,3 +36,7 @@ body {
     margin-right: auto;
     margin-top:30px;
 }
+
+.card-text {
+    margin-top:5px;
+}
