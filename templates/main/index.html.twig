@@ -31,46 +31,86 @@
 			<p>Retrouvez la totalité de nos produits</p>
 
 			{% for product in products %}
-				<div class="col-4 oneProduct">
-					<div class="card h-100">
-						<div class="card-body">
-							<h3 class="card-title">{{ product.name }}</h3>
-							<p class="card-text">{{ product.description }}</p>
-							<td>
-								{% if product.images is not empty %}
-									{% for image in product.images %}
-										<img src="{{ asset('assets/uploads/products/mini/300x300-' ~ image.name) }}" alt="{{ product.name }}" class="img-thumbnail" width='150px'>
-									{% endfor %}
-								{% endif %}
-							</td>
-							{% set promotion = null %}
-							{% for promo in promotions %}
-								{% if promo.products.id == product.id and promo.dateDeb|date("m/d/Y") <= 'now'|date("m/d/Y") and promo.dateFin|date("m/d/Y") >= 'now'|date("m/d/Y") %}
-									{% set promotion = promo %}
-								{% endif %}
-							{% endfor %}
-							{% if promotion is not null %}
-								{% set discountedPrice = product.price - (product.price * promotion.pourcentage / 100) %}
-								<p class="card-text" style="color:red;">
-									<b>Prix promotionnel:
-										{{ discountedPrice|number_format(2) }}
-										€ / -{{promotion.pourcentage}}
-										%
-										<br>
-										Remise valable du
-										{{promotion.dateDeb|date("d/m/Y")}}
-										au
-										{{promotion.dateFin|date("d/m/Y")}}</b>
-								</p>
-							{% else %}
-								<p class="card-text">Prix :
-									{{ product.price|number_format(2) }}
-									€</p>
+
+				<div class="card oneProduct">
+					{% if product.images is not empty %}
+						{% for image in product.images %}
+							<img src="{{ asset('assets/uploads/products/mini/300x300-' ~ image.name) }}" alt="{{ product.name }}" class="img-thumbnail" width='150px'>
+						{% endfor %}
+					{% endif %}
+					<div class="card-body">
+						<h5 class="card-title">{{ product.name }}</h5>
+						<p class="card-text">{{ product.description }}</p>
+						{% set promotion = null %}
+						{% for promo in promotions %}
+							{% if promo.products.id == product.id and promo.dateDeb|date("m/d/Y") <= 'now'|date("m/d/Y") and promo.dateFin|date("m/d/Y") >= 'now'|date("m/d/Y") %}
+								{% set promotion = promo %}
 							{% endif %}
-						</div>
+						{% endfor %}
+						{% if promotion is not null %}
+							{% set discountedPrice = product.price - (product.price * promotion.pourcentage / 100) %}
+							<p class="card-text" style="color:red;">
+								<b>Prix promotionnel:
+									{{ discountedPrice|number_format(2) }}
+									€ / -{{promotion.pourcentage}}
+									%
+									<br>
+									Remise valable du
+									{{promotion.dateDeb|date("d/m/Y")}}
+									au
+									{{promotion.dateFin|date("d/m/Y")}}</b>
+							</p>
+						{% else %}
+							<p class="card-text">Prix :
+								{{ product.price|number_format(2) }}
+								€</p>
+						{% endif %}
 					</div>
 				</div>
-			{% endfor %}
-		</section>
-	</main>
-{% endblock %}
+				{% endfor %}
+
+
+				{# {% for product in products %}
+					<div class="col-4 oneProduct">
+						<div class="card h-100">
+							<div class="card-body">
+								<h3 class="card-title">{{ product.name }}</h3>
+								<p class="card-text">{{ product.description }}</p>
+								<td>
+									{% if product.images is not empty %}
+										{% for image in product.images %}
+											<img src="{{ asset('assets/uploads/products/mini/300x300-' ~ image.name) }}" alt="{{ product.name }}" class="img-thumbnail" width='150px'>
+										{% endfor %}
+									{% endif %}
+								</td>
+								{% set promotion = null %}
+								{% for promo in promotions %}
+									{% if promo.products.id == product.id and promo.dateDeb|date("m/d/Y") <= 'now'|date("m/d/Y") and promo.dateFin|date("m/d/Y") >= 'now'|date("m/d/Y") %}
+										{% set promotion = promo %}
+									{% endif %}
+								{% endfor %}
+								{% if promotion is not null %}
+									{% set discountedPrice = product.price - (product.price * promotion.pourcentage / 100) %}
+									<p class="card-text" style="color:red;">
+										<b>Prix promotionnel:
+											{{ discountedPrice|number_format(2) }}
+											€ / -{{promotion.pourcentage}}
+											%
+											<br>
+											Remise valable du
+											{{promotion.dateDeb|date("d/m/Y")}}
+											au
+											{{promotion.dateFin|date("d/m/Y")}}</b>
+									</p>
+								{% else %}
+									<p class="card-text">Prix :
+										{{ product.price|number_format(2) }}
+										€</p>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				{% endfor %} #}
+			</section>
+		</main>
+	{% endblock %}

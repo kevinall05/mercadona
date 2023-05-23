@@ -2,8 +2,17 @@
     margin-top: 30px;
 }
 
+img.img-thumbnail {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    border: none;
+    margin-bottom: 0;
+}
+
 .oneProduct {
-    margin-bottom: 15px;
+    max-width: 400px;
+    text-align: center;
 }
 
 .col-4 {
