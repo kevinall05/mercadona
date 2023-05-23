@@ -1,116 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<main class="container">
-		<section class="row">
-			<div class="col-12">
-				<h1>MERCADONA</h1>
-				<p>Bienvenue sur le site vitrine de notre boutique.<br>
-					Vous pouvez choisir de trier les produits par catégories mais aussi de voir le catalogue entier.</p>
-			</div>
+    <main class="container">
+        <section class="row">
+            <div class="col-12 text-center">
+                <h1 class="display-4 mb-4">MERCADONA</h1>
+                <p class="lead">Bienvenue sur le site vitrine de notre boutique.</p>
+                <p>Explorez notre catalogue et découvrez une sélection exceptionnelle de produits.</p>
+                <div class="mt-5">
+                    <a class="btn btn-primary btn-lg" href="{{ path('products_index') }}">Accéder à notre catalogue</a>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}
 
-			<hr class="separateurCatalogue">
-
-			<h2>Trier par catégories</h2>
-			<form>
-				<select onchange="location = this.value;">
-					<option value="#" selected disabled hidden>Sélectionner une catégorie</option>
-					{% for category in categories %}
-						{% if category.products is not empty %}
-							<option value="{{ path('categories_list', {slug: category.slug}) }}">{{ category.name }}</option>
-						{% endif %}
-					{% endfor %}
-				</select>
-			</form>
-		</section>
-
-		<hr class="separateurCatalogue">
-
-		<section class="row allProducts">
-			<h2>Tous les produits</h2>
-			<p>Retrouvez la totalité de nos produits</p>
-
-			{% for product in products %}
-
-				<div class="card oneProduct">
-					{% if product.images is not empty %}
-						{% for image in product.images %}
-							<img src="{{ asset('assets/uploads/products/mini/300x300-' ~ image.name) }}" alt="{{ product.name }}" class="img-thumbnail" width='150px'>
-						{% endfor %}
-					{% endif %}
-					<div class="card-body">
-						<h5 class="card-title">{{ product.name }}</h5>
-						<p class="card-text">{{ product.description }}</p>
-						{% set promotion = null %}
-						{% for promo in promotions %}
-							{% if promo.products.id == product.id and promo.dateDeb|date("m/d/Y") <= 'now'|date("m/d/Y") and promo.dateFin|date("m/d/Y") >= 'now'|date("m/d/Y") %}
-								{% set promotion = promo %}
-							{% endif %}
-						{% endfor %}
-						{% if promotion is not null %}
-							{% set discountedPrice = product.price - (product.price * promotion.pourcentage / 100) %}
-							<p class="card-text" style="color:red;">
-								<b>Prix promotionnel:
-									{{ discountedPrice|number_format(2) }}
-									€ / -{{promotion.pourcentage}}
-									%
-									<br>
-									Remise valable du
-									{{promotion.dateDeb|date("d/m/Y")}}
-									au
-									{{promotion.dateFin|date("d/m/Y")}}</b>
-							</p>
-						{% else %}
-							<p class="card-text">Prix :
-								{{ product.price|number_format(2) }}
-								€</p>
-						{% endif %}
-					</div>
-				</div>
-				{% endfor %}
-
-
-				{# {% for product in products %}
-					<div class="col-4 oneProduct">
-						<div class="card h-100">
-							<div class="card-body">
-								<h3 class="card-title">{{ product.name }}</h3>
-								<p class="card-text">{{ product.description }}</p>
-								<td>
-									{% if product.images is not empty %}
-										{% for image in product.images %}
-											<img src="{{ asset('assets/uploads/products/mini/300x300-' ~ image.name) }}" alt="{{ product.name }}" class="img-thumbnail" width='150px'>
-										{% endfor %}
-									{% endif %}
-								</td>
-								{% set promotion = null %}
-								{% for promo in promotions %}
-									{% if promo.products.id == product.id and promo.dateDeb|date("m/d/Y") <= 'now'|date("m/d/Y") and promo.dateFin|date("m/d/Y") >= 'now'|date("m/d/Y") %}
-										{% set promotion = promo %}
-									{% endif %}
-								{% endfor %}
-								{% if promotion is not null %}
-									{% set discountedPrice = product.price - (product.price * promotion.pourcentage / 100) %}
-									<p class="card-text" style="color:red;">
-										<b>Prix promotionnel:
-											{{ discountedPrice|number_format(2) }}
-											€ / -{{promotion.pourcentage}}
-											%
-											<br>
-											Remise valable du
-											{{promotion.dateDeb|date("d/m/Y")}}
-											au
-											{{promotion.dateFin|date("d/m/Y")}}</b>
-									</p>
-								{% else %}
-									<p class="card-text">Prix :
-										{{ product.price|number_format(2) }}
-										€</p>
-								{% endif %}
-							</div>
-						</div>
-					</div>
-				{% endfor %} #}
-			</section>
-		</main>
-	{% endblock %}

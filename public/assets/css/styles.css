@@ -10,6 +10,10 @@ img.img-thumbnail {
     margin-bottom: 0;
 }
 
+.titreCat {
+    margin-bottom: 25px;
+}
+
 .oneProduct {
     max-width: 400px;   
     text-align: center;
