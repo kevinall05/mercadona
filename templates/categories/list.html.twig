@@ -23,6 +23,13 @@
 							<div class="card-body">
 								<h3 class="card-title">{{ product.name }}</h3>
 								<p class="card-text">{{ product.description }}</p>
+															<td>
+								{% if product.images is not empty %}
+									{% for image in product.images %}
+										<img src="{{ asset('assets/uploads/products/mini/300x300-' ~ image.name) }}" alt="{{ product.name }}" class="img-thumbnail" width='150px'>
+									{% endfor %}
+								{% endif %}
+							</td>
 								{% set promotion = null %}
 								{% for promo in promotions %}
 									{% if promo.products.id == product.id and promo.dateDeb|date("m/d/Y") <= 'now'|date("m/d/Y") and promo.dateFin|date("m/d/Y") >= 'now'|date("m/d/Y") %}
